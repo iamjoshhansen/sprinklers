@@ -1,0 +1,15 @@
+{
+  "name": "sprinklers",
+  "version": "1.0.0",
+  "description": "Custom sprinkler controller through the Raspberry Pi",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "grunt test"
+  },
+  "keywords": [
+    "Sprinklers",
+    "Pi"
+  ],
+  "author": "Joshua Hansen, Nate Tidwell"
+}
