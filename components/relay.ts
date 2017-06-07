@@ -11,8 +11,8 @@ interface ZoneMap {
 export default class Relay {
 
 	_zone_map     : ZoneMap;
-	_outs         : Array<Gpio.Gpio>;
-	_active_index : number|null;
+	_outs         : {[pin:number]:Gpio.Gpio};
+	_active_pin : number|null;
 	length        : number;
 
 	constructor (zone_map:ZoneMap) {
@@ -26,11 +26,11 @@ export default class Relay {
 			}
 		});
 
-		this._outs = _.values(_.map(zone_map, function (pin:number, label:string) {
+		this._outs = _.map(zone_map, function (pin:number, label:string) {
 			return new Gpio(pin, 'out');
-		}));
+		});
 
-		this._active_index = null;
+		this._active_pin = null;
 
 
 		Object.defineProperty(self, 'length', {
@@ -43,61 +43,48 @@ export default class Relay {
 
 
 
-	getActive ():null|number {
-		return this._active_index;
-	}
+	getActiveZone ():null|string {
 
+		let label:string;
+		let active_pin:number = this._active_pin;
 
+		_.each(this._zone_map, function (pin:number, label:string) {
 
-	setActive (zone:number):Relay {
-
-		if (this._active_index !== null) {
-			console.log('Turning off zone ' + this._active_index);
-			this._outs[this._active_index].writeSync(0);
-		}
-
-		this._active_index = zone;
-
-		if (zone !== null) {
-
-			if (zone < 0) {
-				throw new Error('zone cannot be < 0');
+			if (pin === active_pin) {
+				return label;
 			}
 
-			if (zone > this.length - 1) {
-				throw new Error('zone cannot be beyond the range of pins (' + (this.length - 1) + ')');
+		});
+
+		return null;
+	}
+
+
+
+	setActiveZone (label:string|null):this {
+
+		/*
+		if (this._active_pin !== null) {
+			console.log('Turning off zone ' + this._active_pin);
+			this._outs[this._active_pin].writeSync(0);
+		}
+		*/
+
+		if (label === null) {
+
+			if (this._active_pin !== null) {
+				console.log('Shutting off "' + this.getActiveZone() + '"');
+				this._outs[this._active_pin].writeSync(0);
+				this._active_pin = null;
 			}
 
-			console.log('Turning on zone ' + this._active_index);
-			this._outs[this._active_index].writeSync(1);
-		}
-
-		return this;
-
-	}
-
-
-	next ():Relay {
-
-		if (this._active_index === null) {
-			this.setActive(0);
 		} else {
-			this.setActive( (this._active_index+1) % this.length );
-		}
+			this._active_pin = this._zone_map[label] || null;
 
-		return this;
-
-	}
-
-
-
-	setLabeledZone (label:string, active:boolean):this {
-
-		if (active) {
-			let pin:number = this._zone_map[label];
-			this.setActive(pin);
-		} else {
-			this.setActive(null);
+			if (this._active_pin) {
+				console.log('Turning on "' + this.getActiveZone() + '"');
+				this._outs[this._active_pin].writeSync(1);
+			}
 		}
 
 		return this;

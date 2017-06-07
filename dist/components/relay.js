@@ -11,53 +11,46 @@ var Relay = (function () {
                 return self._zone_map;
             }
         });
-        this._outs = _.values(_.map(zone_map, function (pin, label) {
+        this._outs = _.map(zone_map, function (pin, label) {
             return new onoff_1.Gpio(pin, 'out');
-        }));
-        this._active_index = null;
+        });
+        this._active_pin = null;
         Object.defineProperty(self, 'length', {
             get: function () {
                 return _.keys(self._zone_map).length;
             }
         });
     }
-    Relay.prototype.getActive = function () {
-        return this._active_index;
-    };
-    Relay.prototype.setActive = function (zone) {
-        if (this._active_index !== null) {
-            console.log('Turning off zone ' + this._active_index);
-            this._outs[this._active_index].writeSync(0);
-        }
-        this._active_index = zone;
-        if (zone !== null) {
-            if (zone < 0) {
-                throw new Error('zone cannot be < 0');
+    Relay.prototype.getActiveZone = function () {
+        var label;
+        var active_pin = this._active_pin;
+        _.each(this._zone_map, function (pin, label) {
+            if (pin === active_pin) {
+                return label;
             }
-            if (zone > this.length - 1) {
-                throw new Error('zone cannot be beyond the range of pins (' + (this.length - 1) + ')');
-            }
-            console.log('Turning on zone ' + this._active_index);
-            this._outs[this._active_index].writeSync(1);
-        }
-        return this;
+        });
+        return null;
     };
-    Relay.prototype.next = function () {
-        if (this._active_index === null) {
-            this.setActive(0);
+    Relay.prototype.setActiveZone = function (label) {
+        /*
+        if (this._active_pin !== null) {
+            console.log('Turning off zone ' + this._active_pin);
+            this._outs[this._active_pin].writeSync(0);
+        }
+        */
+        if (label === null) {
+            if (this._active_pin !== null) {
+                console.log('Shutting off "' + this.getActiveZone() + '"');
+                this._outs[this._active_pin].writeSync(0);
+                this._active_pin = null;
+            }
         }
         else {
-            this.setActive((this._active_index + 1) % this.length);
-        }
-        return this;
-    };
-    Relay.prototype.setLabeledZone = function (label, active) {
-        if (active) {
-            var pin = this._zone_map[label];
-            this.setActive(pin);
-        }
-        else {
-            this.setActive(null);
+            this._active_pin = this._zone_map[label] || null;
+            if (this._active_pin) {
+                console.log('Turning on "' + this.getActiveZone() + '"');
+                this._outs[this._active_pin].writeSync(1);
+            }
         }
         return this;
     };

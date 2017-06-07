@@ -9,14 +9,14 @@ var relay = new relay_1.default({
     "planter": 21
 });
 setInterval(function () {
-    relay.setLabeledZone("front", true);
+    relay.setActiveZone("front");
     setTimeout(function () {
-        relay.setLabeledZone("back-0", true);
+        relay.setActiveZone("back-0");
     }, 1000);
     setTimeout(function () {
-        relay.setLabeledZone("back-1", true);
+        relay.setActiveZone("back-1");
     }, 2000);
     setTimeout(function () {
-        relay.setLabeledZone("planter", true);
+        relay.setActiveZone("planter");
     }, 3000);
 }, 4000);
