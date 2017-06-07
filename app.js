@@ -1,14 +1,10 @@
 console.log("All the Sprinklers!!!!1!!");
 
-var Gpio = require('onoff').Gpio,
-	led = new Gpio(18, 'out'),
-	val = false;
+var Relay = require('./components/relay.js'),
+	relay = new Relay([12,16,20,21]);
 
 setInterval(function () {
 
-	val = ! val;
+	relay.next();
 
-	console.log('writing value: ' + val);
-	led.writeSync(val ? 1 : 0);
-
-}, 10);
+}, 1000);
