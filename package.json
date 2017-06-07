@@ -11,5 +11,8 @@
     "Sprinklers",
     "Pi"
   ],
-  "author": "Joshua Hansen, Nate Tidwell"
+  "author": "Joshua Hansen, Nate Tidwell",
+  "dependencies": {
+    "onoff": "^1.1.2"
+  }
 }
