@@ -1,7 +1,7 @@
 var Gpio = require('onoff').Gpio,
 	_ = require('lodash');
 
-module.export = Relay;
+module.exports = Relay;
 
 function Relay (pins) {
 
