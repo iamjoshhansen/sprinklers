@@ -12,7 +12,7 @@ var Relay = (function () {
             }
         });
         this._outs = _.values(_.map(zone_map, function (pin, label) {
-            return new onoff_1.default(pin, 'out');
+            return new onoff_1.Gpio(pin, 'out');
         }));
         this._active_index = null;
         Object.defineProperty(self, 'length', {

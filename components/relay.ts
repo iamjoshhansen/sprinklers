@@ -1,4 +1,4 @@
-import Gpio from 'onoff';
+import { Gpio } from 'onoff';
 import * as _ from 'lodash';
 
 interface ZoneMap {
