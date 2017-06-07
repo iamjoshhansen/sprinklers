@@ -27,7 +27,7 @@ export default class Relay {
 		});
 
 		this._outs = _.values(_.map(zone_map, function (pin:number, label:string) {
-			return new Gpio.Gpio(pin, 'out');
+			return new Gpio(pin, 'out');
 		}));
 
 		this._active_index = null;
