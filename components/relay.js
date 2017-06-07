@@ -43,8 +43,20 @@ Relay.prototype.setActive = function (zone) {
 	}
 
 	this._active_index = zone;
-	console.log('Turning on zone ' + this._active_index);
-	this._outs[this._active_index].writeSync(1);
+
+	if (zone !== null) {
+
+		if (zone < 0) {
+			throw new Error('zone cannot be < 0');
+		}
+
+		if (zone > this.length - 1) {
+			throw new Error('zone cannot be beyond the range of pins (' + (this.length - 1) + ')');
+		}
+
+		console.log('Turning on zone ' + this._active_index);
+		this._outs[this._active_index].writeSync(1);
+	}
 
 	return this;
 
