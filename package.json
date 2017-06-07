@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "grunt test"
+    "test": "grunt test",
+    "refresh": "git pull; npm install; node app.js"
   },
   "keywords": [
     "Sprinklers",
