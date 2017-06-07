@@ -11,4 +11,4 @@ setInterval(function () {
 	console.log('writing value: ' + val);
 	led.writeSync(val ? 1 : 0);
 
-}, 1000);
+}, 10);
