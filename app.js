@@ -1,7 +1,8 @@
 console.log("All the Sprinklers!!!!1!!");
 
-var Relay = require('./components/relay.js'),
-	relay = new Relay([12,16,20,21]);
+import Relay from './components/relay-2';
+
+var relay = new Relay([12,16,20,21]);
 
 setInterval(function () {
 
