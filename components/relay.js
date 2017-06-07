@@ -8,7 +8,7 @@ function Relay (pins) {
 	var self = this;
 
 	this._pins = pins;
-	Object.defineProperty('pins', self, {
+	Object.defineProperty(self, 'pins', {
 		get: function () {
 			return self._pins
 		}
@@ -21,7 +21,7 @@ function Relay (pins) {
 	this._active_index = null;
 
 
-	Object.defineProperty('length', self, {
+	Object.defineProperty(self, 'length', {
 		get: function () {
 			return self._pins.length
 		}
