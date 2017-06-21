@@ -22,7 +22,7 @@ io.on('connection', function (socket) {
 	console.log('We have a new connection!');
 
 	connection_count++;
-	green_button.writeSync(0);
+	green_button.writeSync(1);
 
 	socket.on('activate-zone', function (zone_index) {
 		console.log('Activating zone ', zone_index);
@@ -34,7 +34,7 @@ io.on('connection', function (socket) {
 		connection_count--;
 
 		if (connection_count < 1) {
-			green_button.writeSync(1);
+			green_button.writeSync(0);
 		}
 	});
 });
