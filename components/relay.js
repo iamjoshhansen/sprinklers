@@ -1,6 +1,5 @@
 var Gpio   = require('onoff').Gpio,
 	_      = require('lodash'),
-	server = require('http').createServer(),
 	ON  = 0,
 	OFF = 1;
 
