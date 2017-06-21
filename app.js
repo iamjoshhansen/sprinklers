@@ -2,14 +2,14 @@ console.log("All the Sprinklers!!!!1!!");
 
 var Gpio  = require('onoff').Gpio;
 var Relay = require('./components/relay.js');
-var relay = new Relay([12,16,20,21]);
+var relay = new Relay([4,14,17,15,27,18,22,23,10,24,9,25,11,8,5,7]);
 
 // setInterval(function () {
 // 	relay.next();
 // }, 1000);
 
 
-var green_button = new Gpio(18, 'out');
+var green_button = new Gpio(21, 'out');
 
 
 
