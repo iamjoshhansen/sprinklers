@@ -53,7 +53,7 @@ _.extend(Relay.prototype, {
 
 		if (this._active_index !== null) {
 			console.log('Turning off zone ' + this._active_index);
-			this._outs[this._active_index].writeSync(ON);
+			this._outs[this._active_index].writeSync(OFF);
 		}
 
 		this._active_index = zone;
@@ -69,7 +69,7 @@ _.extend(Relay.prototype, {
 			}
 
 			console.log('Turning on zone ' + this._active_index);
-			this._outs[this._active_index].writeSync(OFF);
+			this._outs[this._active_index].writeSync(ON);
 		}
 
 		return this;
