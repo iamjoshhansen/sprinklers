@@ -12,7 +12,7 @@ var port = 2235;
 var io = require('socket.io')(port);
 
 io.on('connection', function (socket) {
-	io.emit('this', { will: 'be received by everyone'});
+	console.log('We have a new connection!');
 
 	socket.on('activate-zone', function (zone_index) {
 		console.log('Activating zone ', zone_index);
