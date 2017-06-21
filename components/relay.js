@@ -48,22 +48,22 @@ _.extend(Relay.prototype, {
 
 
 
-	setActive: function (zone) {
+	setActive: function (zone_index) {
 
 		if (this._active_index !== null) {
 			console.log('Turning off zone ' + this._active_index);
 			this._outs[this._active_index].writeSync(OFF);
 		}
 
-		this._active_index = zone;
+		this._active_index = zone_index;
 
-		if (zone !== null) {
+		if (zone_index !== null) {
 
-			if (zone < 0) {
+			if (zone_index < 0) {
 				throw new Error('zone cannot be < 0');
 			}
 
-			if (zone > this.length - 1) {
+			if (zone_index > this.length - 1) {
 				throw new Error('zone cannot be beyond the range of pins (' + (this.length - 1) + ')');
 			}
 
